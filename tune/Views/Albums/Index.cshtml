@@ -1,0 +1,25 @@
+﻿@model IEnumerable<tune.Models.Album>
+
+@{
+    ViewBag.Title = "Albums";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>@ViewBag.Title</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var album in Model)
+        {
+            <tr>
+                <td>@Html.ActionLink(album.Name, "Details", "Albums", new { id = album.Id }, null)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
