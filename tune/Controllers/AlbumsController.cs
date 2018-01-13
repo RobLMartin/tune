@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,17 +11,28 @@ namespace tune.Controllers
 {
     public class AlbumsController : Controller
     {
+        private ApplicationDbContext _context;
+
+        public AlbumsController()
+        {
+            _context = new ApplicationDbContext();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
 
         public ViewResult Index()
         {
-            var albums = GetAlbums();
+            var albums = _context.Albums.Include(a => a.Genre).ToList();
 
             return View(albums);
         }
 
         public ActionResult Details(int id)
         {
-            var album = GetAlbums().SingleOrDefault(a => a.Id == id);
+            var album = _context.Albums.Include(m => m.Genre).SingleOrDefault(a => a.Id == id);
 
             if (album == null)
             {
@@ -28,17 +40,6 @@ namespace tune.Controllers
             }
 
             return View(album);
-        }
-
-        private IEnumerable<Album> GetAlbums()
-        {
-            return new List<Album>
-            {
-                new Album { Id = 1, Name = "Fleet Foxes - Self Titled" },
-                new Album { Id = 2, Name = "Fleet Foxes - Helplessness Blues" },
-                new Album { Id = 3, Name = "Fleet Foxes - Crack-Up" },
-                new Album { Id = 4, Name = "Radiohead - Moon Shaped Pool" }
-            };
         }
 
         //// GET: Album/Random
