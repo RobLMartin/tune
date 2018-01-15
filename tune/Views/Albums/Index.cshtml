@@ -6,6 +6,9 @@
 }
 
 <h2>@ViewBag.Title</h2>
+<p>
+    @Html.ActionLink("New Album", "New", "Albums", null, new { @class = "btn btn-primary"})
+</p>
 
 <table class="table table-bordered table-hover">
     <thead>
@@ -18,7 +21,7 @@
         @foreach (var album in Model)
         {
             <tr>
-                <td>@Html.ActionLink(album.Name, "Details", "Albums", new { id = album.Id }, null)</td>
+                <td>@Html.ActionLink(album.Name, "Edit", "Albums", new { id = album.Id }, null)</td>
                 <td>@album.Genre.Name</td>
             </tr>
         }
