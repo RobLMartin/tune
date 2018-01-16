@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -20,7 +21,10 @@ namespace tune.Controllers.Api
 
         public IEnumerable<AlbumDto> GetAlbums()
         {
-            return _context.Albums.ToList().Select(Mapper.Map<Album, AlbumDto>);
+            return _context.Albums
+                .Include(m => m.Genre)
+                .ToList()
+                .Select(Mapper.Map<Album, AlbumDto>);
         }
 
         public IHttpActionResult GetAlbum(int id)

@@ -26,9 +26,7 @@ namespace tune.Controllers
 
         public ViewResult Index()
         {
-            var albums = _context.Albums.Include(a => a.Genre).ToList();
-
-            return View(albums);
+            return View();
         }
 
         public ViewResult New()
